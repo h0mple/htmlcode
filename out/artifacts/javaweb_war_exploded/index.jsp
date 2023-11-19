@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
-
+<% String path = request.getContextPath();%>
 
 
 <!DOCTYPE html>
@@ -18,5 +18,10 @@
     <th>Price</th>
     <th>Action</th>
   </tr>
+  <form action="<%=path%>/books" method="get">
+  </form>
+</table>
 
-  
+
+
+
