@@ -19,7 +19,7 @@ public class BookDao {
         // 获得连接
         Connection cn = DbUtil.getConn();
         // 编写带占位符的预编译SQL语句
-        String insert = "INSERT INTO book(bookid,title,author,publisher,price) VALUES (?,?,?,?,?);";
+        String insert = "INSERT INTO books(bookid,title,author,publisher,price) VALUES (?,?,?,?,?);";
         try {
             PreparedStatement ps = cn.prepareStatement(insert);// 创建工具时就传入预编译语句
             // 处理每个占位符对应的数据 ，要找准数据类型
@@ -43,23 +43,21 @@ public class BookDao {
     }
 
     // 修改 以ID为条件 允许修改其他所有列
-    public boolean update(Student stu) {
+    public boolean update(Book book) {
         // 获得连接
         Connection cn = DbUtil.getConn();
         // 编写带占位符的预编译SQL语句
-        String update = "update student set  stunum=?,stuname=?,stusex=?,stuage=?,stuidcard=?,stubirth=?,stuscore=?  where stuid = ?";
+        String update = "update books set  title=?,author=?,publisher=?,price=?  where bookid = ?";
 
         try {
             PreparedStatement ps = cn.prepareStatement(update);
             // 处理每个占位符对应的数据 ，要找准数据类型
-            ps.setString(1, stu.getStunum());// 列的序号从1开始
-            ps.setString(2, stu.getStuname());
-            ps.setString(3, stu.getStusex());
-            ps.setInt(4, stu.getStuage());
-            ps.setString(5, stu.getStucard());
-            ps.setDate(6, stu.getStubirth());
-            ps.setInt(7, stu.getStuscore());
-            ps.setInt(8, stu.getStuid());
+            ps.setString(1,book.gettitle());// 列的序号从1开始
+            ps.setString(2,book.getauthor());
+            ps.setString(3,book.getpublisher());
+            ps.setDouble(4,book.getprice());
+            ps.setInt(5,book.getbookid());
+
 
             int result = ps.executeUpdate();
             return true;
@@ -75,16 +73,16 @@ public class BookDao {
 
     // 删除
     // 修改 以ID为条件删除指定数据
-    public boolean delete(Integer stuid) {
+    public boolean delete(Integer bookid) {
         // 获得连接
         Connection cn = DbUtil.getConn();
         // 编写带占位符的预编译SQL语句
-        String delete = "delete from student where stuid = ?";
+        String delete = "delete from books where bookid = ?";
 
         try {
             PreparedStatement ps = cn.prepareStatement(delete);
             // 处理每个占位符对应的数据 ，要找准数据类型
-            ps.setInt(1, stuid);// 列的序号从1开始
+            ps.setInt(1, bookid);// 列的序号从1开始
             int result = ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -99,27 +97,24 @@ public class BookDao {
     }
 
     // 查询所有(返回由Student对象组成的ArrayList集合)
-    public ArrayList<Student> queryAll() {
+    public ArrayList<Book> queryAll() {
         // 获得连接
         Connection cn = DbUtil.getConn();
-        ArrayList<Student> al = new ArrayList<Student>();//包含所有查询结果对象的集合
+        ArrayList<Book> al = new ArrayList<Book>();//包含所有查询结果对象的集合
 
-        String sql ="select * from student";
+        String sql ="select * from books";
         try {
             PreparedStatement ps = cn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {//多行结果
                 //每行结果都封装为对象
-                Student stu = new Student(
-                        rs.getInt("stuid"),
-                        rs.getString("stunum"),
-                        rs.getString("stuname"),
-                        rs.getString("stuidcard"),
-                        rs.getString("stusex"),
-                        rs.getInt("stuage"),
-                        rs.getDate("stubirth"),
-                        rs.getInt("stuscore"));
-                al.add(stu);
+                Book book = new Book(
+                        rs.getInt("bookid"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("publisher"),
+                        rs.getDouble("price"));
+                al.add(book);
             }
 
             return al;
@@ -134,29 +129,26 @@ public class BookDao {
     }
 
     // 按ID查询一个
-    public Student querySingle(Integer stuid){
+    public Book querySingle(Integer bookid){
         // 获得连接
         Connection cn = DbUtil.getConn();
 
         try {
             //编写语句
-            String single = "select * from student where stuid = ?";
+            String single = "select * from books where bookid = ?";
             PreparedStatement ps = cn.prepareStatement(single);
-            ps.setInt(1, stuid);
+            ps.setInt(1, bookid);
 
             //将查询结果的一行数据转化为一个Student对象
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {//最多只能有一行数据
-                Student stu = new Student(
-                        rs.getInt("stuid"),
-                        rs.getString("stunum"),
-                        rs.getString("stuname"),
-                        rs.getString("stuidcard"),
-                        rs.getString("stusex"),
-                        rs.getInt("stuage"),
-                        rs.getDate("stubirth"),
-                        rs.getInt("stuscore"));
-                return stu;
+                Book book = new Book(
+                        rs.getInt("bookid"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("publisher"),
+                        rs.getDouble("price"));
+                return book;
             }
 
         } catch (SQLException e) {

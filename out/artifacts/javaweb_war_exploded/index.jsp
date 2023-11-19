@@ -1,16 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 86156
-  Date: 2023-11-18
-  Time: 22:24
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+
+
+
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<head>
+  <title>Book List</title>
+</head>
+<body>
+<h1>Book List</h1>
+<table border="1">
+  <tr>
+    <th>Book ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Publisher</th>
+    <th>Price</th>
+    <th>Action</th>
+  </tr>
+
+  

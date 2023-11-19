@@ -1,7 +1,5 @@
 package entity;
 
-import java.sql.Date;//java.util.Date的子类  专用于数据库操作
-
 //实体类 javaBean entity 对应数据表设计的数据类
 public class Book {
     //属性对应列去设计
