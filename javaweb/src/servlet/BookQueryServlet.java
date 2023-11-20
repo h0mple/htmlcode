@@ -11,18 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/books"})
+@WebServlet("/books")
 public class BookQueryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
         //输出所有student查询结果
-        BookDao bdao = new BookDao();
+        /*BookDao bdao = new BookDao();
         ArrayList<Book> books = bdao.queryAll();
         for(Book book : books){
             System.out.println(book);//输出到控制台
             resp.getWriter().println("<h3>"+book+"</h3>");
         }
+*/
+        BookDao bdao = new BookDao();
+        ArrayList<Book> books = bdao.queryAll();
+        for(Book book : books){
+            System.out.println(book);//输出到控制台
+            resp.getWriter().println("<h2>"+book+"</h2>");
+        }
+
+
+
     }
 
     @Override

@@ -8,19 +8,10 @@
   <title>Book List</title>
 </head>
 <body>
-<h1>Book List</h1>
-<table border="1">
-  <tr>
-    <th>Book ID</th>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Publisher</th>
-    <th>Price</th>
-    <th>Action</th>
-  </tr>
-  <form action="<%=path%>/books" method="get">
-  </form>
-</table>
+<h1>图书管理系统</h1>
+<a href="books">列出所有书</a>
+</form>
+</body>
 
 
 
