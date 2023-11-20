@@ -15,7 +15,7 @@ public class DbUtil {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            cn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/postgres","root","030114lyh");
+            cn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/postgres?useUnicode=true&characterEncoding=UTF-8","root","030114lyh");
             return  cn;
         } catch (SQLException e) {
             e.printStackTrace();

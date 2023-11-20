@@ -43,32 +43,26 @@ public class BookDao {
     }
 
     // 修改 以ID为条件 允许修改其他所有列
-    public boolean update(Book book) {
-        // 获得连接
-        Connection cn = DbUtil.getConn();
-        // 编写带占位符的预编译SQL语句
-        String update = "update books set  title=?,author=?,publisher=?,price=?  where bookid = ?";
-
-        try {
-            PreparedStatement ps = cn.prepareStatement(update);
-            // 处理每个占位符对应的数据 ，要找准数据类型
-            ps.setString(1,book.gettitle());// 列的序号从1开始
-            ps.setString(2,book.getauthor());
-            ps.setString(3,book.getpublisher());
-            ps.setDouble(4,book.getprice());
-            ps.setInt(5,book.getbookid());
-
-
-            int result = ps.executeUpdate();
-            return true;
+    public boolean update(int bookid,String title,String author,String publisher,Double price){
+        //获得连接
+        Connection cn=DbUtil.getConn();
+        String update="update books set title=?,author=?,publisher=?,price=? where bookid=?;";
+        try{
+            PreparedStatement ps=cn.prepareStatement(update);
+            ps.setInt(5,bookid);
+            ps.setString(1, title);
+            ps.setString(2,author);
+            ps.setString(3,publisher);
+            ps.setDouble(4,price);
+            int result=ps.executeUpdate();
+            return  true;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        } finally {
+        }
+        finally{
             DbUtil.closeConn();
         }
         return false;
-
     }
 
     // 删除
@@ -127,6 +121,29 @@ public class BookDao {
 
         return null;//出现异常返回null
     }
+
+    public Book queryBook(Integer bookid){
+        //获得连接
+        Connection cn=DbUtil.getConn();
+        String select="select * from books where bookid=?;";
+        try{
+            PreparedStatement ps=cn.prepareStatement(select);
+            ps.setInt(1,bookid);
+            ResultSet rs= ps.executeQuery();
+            while(rs.next()){
+                String title= rs.getString(2);
+                String author=rs.getString(3);
+                String publisher=rs.getString(4);
+                Double price=rs.getDouble(5);
+                Book book=new Book(bookid,title,author,publisher,price);
+                return book;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     // 按ID查询一个
     public Book querySingle(Integer bookid){

@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet("/query")
-public class BookQueryServlet extends HttpServlet {
+@WebServlet("/queryall")
+public class BookAllQueryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
@@ -24,19 +25,20 @@ public class BookQueryServlet extends HttpServlet {
             resp.getWriter().println("<h3>"+book+"</h3>");
         }
 */
-        resp.setContentType("text/html;charset=UTF-8");
-        req.setCharacterEncoding("utf-8");
-        BookDao dao = new BookDao();
-        int bookid = Integer.parseInt(req.getParameter("bookid"));
-        Book book = dao.queryBook(bookid);
-        req.setAttribute("books", book);
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        BookDao bdao = new BookDao();
+        ArrayList<Book> books = bdao.queryAll();
+        PrintWriter out=resp.getWriter();
+        for(Book book : books){
+            //输出到控制台
+            resp.getWriter().println("<h3>"+book+"</h3>");
+            System.out.println(book);
 
         }
+        out.println("<input type=\"button\" onclick=\"window.location.href=\'button.jsp\' \" value=\"返回\">  ");
 
 
 
-
+    }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
